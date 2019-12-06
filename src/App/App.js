@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Menu from './Menu';
+import { DRAWER_WIDTH } from './constants';
 
-// Css
-import './App.css';
+const styles = theme => ({
+  root: {
+    display: 'flex'
+  },
+  appBar: {
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    marginLeft: DRAWER_WIDTH
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    backgroundColor: theme.palette.grey[100],
+    height: '100%'
+  },
+  toolbar: theme.mixins.toolbar
+});
 
 class App extends Component {
   constructor(props) {
@@ -10,52 +30,40 @@ class App extends Component {
     this.state = {
       loading: true,
       albums: []
-    }
+    };
   }
 
   async componentDidMount() {
     try {
       const res = await fetch('/albums');
       const json = await res.json();
-      this.setState((prevState) => ({
+      this.setState(prevState => ({
         ...prevState,
         loading: false,
         albums: json
       }));
-    } catch(err) {
-      console.error("Error accediendo al servidor", err);
+    } catch (err) {
+      console.error('Error accediendo al servidor', err);
     }
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="App">
-        <h1>Plantilla de la práctica final!</h1>
-        <p>
-          Esta plantilla contiene todo lo necesario para comenzar a
-          desarrollar la práctica final. Antes de comenzar a desarrollar,
-          lee la documentación de la práctica y el fichero README.md de
-          este repositorio.
-        </p>
-        <h2>Servidor de desarrollo</h2>
-        <p>
-          El proyecto está preconfigurado con un servidor de desarrollo basado
-          en json-server:
-        </p>
-          { this.state.loading ?
-            <p>Cargando...</p>
-            : <ul>
-              {this.state.albums.map(album => <li key={album.id}>{album.name}</li>)}
-            </ul>
-          }
-        <h2>¿Dudas?</h2>
-        <p>
-          No olvides pasarte por el foro si tienes alguna duda sobre la práctica final
-          o la plantilla :).
-        </p>
+      <div className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6">Reactify</Typography>
+          </Toolbar>
+        </AppBar>
+        <Menu />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Typography variant="h6">Main page</Typography>
+        </main>
       </div>
     );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
