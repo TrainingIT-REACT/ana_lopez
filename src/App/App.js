@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from './Menu';
 import AlbumCard from './components/AlbumCard';
+import SongCard from './components/SongCard';
 import { DRAWER_WIDTH } from './constants';
 
 const styles = theme => ({
@@ -30,10 +31,10 @@ const styles = theme => ({
   media: {
     height: 140
   },
-  recommendationList: {
+  listContainer: {
     marginTop: 10
   },
-  albumesList: {
+  recommendationsList: {
     marginTop: 8,
     width: '100%',
     display: 'flex'
@@ -56,28 +57,48 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const res = await fetch('/albums');
-      const albums = await res.json();
-      const albumRecommendations = this.getRandomAlbums(albums);
+      const resAlbums = await fetch('/albums');
+      const albums = await resAlbums.json();
+      const albumRecommendations = this.getRandomRecommendations(albums, 4);
+      const resSongs = await fetch('/songs');
+      const songs = await resSongs.json();
+      const songsRecommendations = this.getRandomRecommendations(songs, 3);
+      const getSongsRecommendationsInfo = this.getSongsRecommendationsInfo(
+        songsRecommendations,
+        albums
+      );
       this.setState(prevState => ({
         ...prevState,
         loading: false,
-        albums: albumRecommendations
+        albums: albumRecommendations,
+        songs: getSongsRecommendationsInfo
       }));
     } catch (err) {
       console.error('Error accediendo al servidor', err);
     }
   }
 
-  getRandomAlbums = albums => {
-    const numberOfAlbums = albums.length;
-    if (numberOfAlbums !== 0) {
+  getSongsRecommendationsInfo = (songsRecommendations, albums) => {
+    return songsRecommendations.map(song => {
+      const album = albums.find(a => a.id === song.album_id);
+      return {
+        name: song.name,
+        album: album.name,
+        cover: album.cover,
+        artist: album.artist
+      };
+    });
+  };
+
+  getRandomRecommendations = (musicList, numOfRecommendations) => {
+    const numberOfItems = musicList.length;
+    if (numberOfItems !== 0) {
       let recommendations = [];
-      while (recommendations.length < 4) {
-        const recommendationIndex = Math.floor(Math.random() * numberOfAlbums);
-        const albumRecommendation = albums[recommendationIndex];
-        if (!recommendations.find(recommendation => recommendation.id === albumRecommendation.id)) {
-          recommendations.push(albumRecommendation);
+      while (recommendations.length < numOfRecommendations) {
+        const recommendationIndex = Math.floor(Math.random() * numberOfItems);
+        const musicItem = musicList[recommendationIndex];
+        if (!recommendations.find(recommendation => recommendation.id === musicItem.id)) {
+          recommendations.push(musicItem);
         }
       }
       return recommendations;
@@ -101,13 +122,24 @@ class App extends Component {
           {!this.state.loading && (
             <>
               <Typography variant="subtitle2">Hoy te recomendamos...</Typography>
-              <div className={classes.recommendationList}>
+              <div className={classes.listContainer}>
                 <Typography variant="h6">Álbumes</Typography>
                 <Divider />
-                <div className={classes.albumesList}>
+                <div className={classes.recommendationsList}>
                   {this.state.albums.map(recommendation => (
                     <div className={classes.cardContainer}>
                       <AlbumCard album={recommendation} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className={classes.listContainer}>
+                <Typography variant="h6">Canciones</Typography>
+                <Divider />
+                <div className={classes.recommendationsList}>
+                  {this.state.songs.map(recommendation => (
+                    <div className={classes.cardContainer}>
+                      <SongCard song={recommendation} />
                     </div>
                   ))}
                 </div>

@@ -21,7 +21,7 @@ const AlbumCard = props => {
       <CardActionArea>
         <CardMedia className={classes.media} image={album.cover} />
         <CardContent>
-          <Typography gutterBottom variant="h6" component="h2">
+          <Typography gutterBottom variant="h6">
             {album.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
