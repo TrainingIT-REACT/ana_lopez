@@ -57,23 +57,23 @@ class App extends Component {
   async componentDidMount() {
     try {
       const res = await fetch('/albums');
-      const json = await res.json();
+      const albums = await res.json();
+      const albumRecommendations = this.getRandomAlbums(albums);
       this.setState(prevState => ({
         ...prevState,
         loading: false,
-        albums: json
+        albums: albumRecommendations
       }));
     } catch (err) {
       console.error('Error accediendo al servidor', err);
     }
   }
 
-  getRandomAlbums = () => {
-    const { albums } = this.state;
+  getRandomAlbums = albums => {
     const numberOfAlbums = albums.length;
     if (numberOfAlbums !== 0) {
       let recommendations = [];
-      while (recommendations.length < 3) {
+      while (recommendations.length < 4) {
         const recommendationIndex = Math.floor(Math.random() * numberOfAlbums);
         const albumRecommendation = albums[recommendationIndex];
         if (!recommendations.find(recommendation => recommendation.id === albumRecommendation.id)) {
@@ -88,7 +88,6 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const albumRecommendations = this.getRandomAlbums();
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
@@ -106,7 +105,7 @@ class App extends Component {
                 <Typography variant="h6">Álbumes</Typography>
                 <Divider />
                 <div className={classes.albumesList}>
-                  {albumRecommendations.map(recommendation => (
+                  {this.state.albums.map(recommendation => (
                     <div className={classes.cardContainer}>
                       <AlbumCard album={recommendation} />
                     </div>
