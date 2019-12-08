@@ -66,7 +66,6 @@ const SongCard = props => {
 };
 
 SongCard.propTypes = {
-  classes: PropTypes.object.isRequired,
   song: PropTypes.object.isRequired
 };
 

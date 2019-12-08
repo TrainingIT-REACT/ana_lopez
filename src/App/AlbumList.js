@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import AlbumCard from './components/AlbumCard';
 
@@ -26,14 +27,19 @@ class AlbumList extends Component {
     }
   }
 
+  onClickOnAlbum = albumId => {
+    const currentLocation = this.props.location.pathname;
+    this.props.history.push(`${currentLocation}/${albumId}`);
+  };
+
   render() {
     const { albums } = this.state;
     return (
       <>
         <Grid container spacing={2}>
-          {albums.map(album => (
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <AlbumCard album={album} />
+          {albums.map((album, index) => (
+            <Grid item xs={12} sm={6} md={4} xl={3} key={index}>
+              <AlbumCard album={album} onClickOnAlbum={() => this.onClickOnAlbum(album.id)} />
             </Grid>
           ))}
         </Grid>
@@ -41,5 +47,10 @@ class AlbumList extends Component {
     );
   }
 }
+
+AlbumList.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
+};
 
 export default AlbumList;

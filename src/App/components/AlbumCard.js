@@ -18,7 +18,7 @@ const AlbumCard = props => {
   const { album } = props;
   return (
     <Card>
-      <CardActionArea>
+      <CardActionArea onClick={props.onClickOnAlbum}>
         <CardMedia className={classes.media} image={album.cover} />
         <CardContent>
           <Typography gutterBottom variant="h6">
@@ -34,8 +34,12 @@ const AlbumCard = props => {
 };
 
 AlbumCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-  album: PropTypes.object.isRequired
+  album: PropTypes.object.isRequired,
+  onClickOnAlbum: PropTypes.func.isRequired
+};
+
+AlbumCard.defaultProps = {
+  onClickOnAlbum: () => ({})
 };
 
 export default AlbumCard;

@@ -86,6 +86,10 @@ class Recommendations extends Component {
     return [];
   };
 
+  onClickOnAlbum = albumId => {
+    this.props.history.push(`albums/${albumId}`);
+  };
+
   render() {
     const { classes } = this.props;
     if (this.state.loading) return null;
@@ -96,9 +100,12 @@ class Recommendations extends Component {
           <Typography variant="h6">Álbumes</Typography>
           <Divider />
           <div className={classes.recommendationsList}>
-            {this.state.albums.map(recommendation => (
-              <div className={classes.cardContainer}>
-                <AlbumCard album={recommendation} />
+            {this.state.albums.map((recommendation, index) => (
+              <div className={classes.cardContainer} key={index}>
+                <AlbumCard
+                  album={recommendation}
+                  onClickOnAlbum={() => this.onClickOnAlbum(recommendation.id)}
+                />
               </div>
             ))}
           </div>
@@ -107,8 +114,8 @@ class Recommendations extends Component {
           <Typography variant="h6">Canciones</Typography>
           <Divider />
           <div className={classes.recommendationsList}>
-            {this.state.songs.map(recommendation => (
-              <div className={classes.cardContainer}>
+            {this.state.songs.map((recommendation, index) => (
+              <div className={classes.cardContainer} key={index}>
                 <SongCard song={recommendation} />
               </div>
             ))}

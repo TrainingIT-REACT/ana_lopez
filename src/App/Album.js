@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
@@ -104,7 +104,7 @@ class Album extends Component {
         <Paper className={classes.songsContainer}>
           <List>
             {songs.map((song, index) => (
-              <>
+              <Fragment key={index}>
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar>
@@ -122,7 +122,7 @@ class Album extends Component {
                   </ListItemSecondaryAction>
                 </ListItem>
                 {index !== numberOfSongs - 1 && <Divider />}
-              </>
+              </Fragment>
             ))}
           </List>
         </Paper>
