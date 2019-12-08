@@ -34,10 +34,6 @@ const useStyles = makeStyles(theme => ({
   },
   songName: {
     fontWeight: 600
-  },
-  playButton: {
-    width: 40,
-    height: 40
   }
 }));
 
@@ -58,7 +54,7 @@ const SongCard = props => {
             Álbum: {song.album}
           </Typography>
           <div className={classes.controls}>
-            <IconButton className={classes.playButton}>
+            <IconButton>
               <PlayArrowIcon className={classes.playIcon} />
             </IconButton>
           </div>

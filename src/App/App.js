@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from './Menu';
 import Recommendations from './Recommendations';
 import AlbumList from './AlbumList';
+import Album from './Album';
 import { DRAWER_WIDTH } from './constants';
 
 const styles = theme => ({
@@ -44,6 +45,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Recommendations} />
               <Route exact path="/albums" component={AlbumList} />
+              <Route exact path="/albums/:id" component={Album} />
             </Switch>
           </main>
         </Router>
