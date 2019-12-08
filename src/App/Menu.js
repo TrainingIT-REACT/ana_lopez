@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -24,8 +25,15 @@ const useStyles = makeStyles(theme => ({
   menuItemIcon: {
     minWidth: 35,
     color: theme.palette.primary.contrastText
+  },
+  menuActive: {
+    backgroundColor: theme.palette.action.selected
   }
 }));
+
+const LinkToItemRoute = React.forwardRef((props, ref) => (
+  <NavLink innerRef={ref} exact {...props} />
+));
 
 const Menu = () => {
   const classes = useStyles();
@@ -41,9 +49,16 @@ const Menu = () => {
       <Divider />
       <List>
         {menuItems.map(menuItem => {
-          const { Icon, text } = menuItem;
+          const { Icon, text, route } = menuItem;
+
           return (
-            <ListItem button key={text}>
+            <ListItem
+              button
+              key={text}
+              component={LinkToItemRoute}
+              to={route}
+              activeClassName={classes.menuActive}
+            >
               <ListItemIcon className={classes.menuItemIcon}>
                 <Icon />
               </ListItemIcon>

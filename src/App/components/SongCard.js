@@ -34,12 +34,16 @@ const useStyles = makeStyles(theme => ({
   },
   songName: {
     fontWeight: 600
+  },
+  playButton: {
+    width: 40,
+    height: 40
   }
 }));
 
 const SongCard = props => {
   const classes = useStyles();
-  const { song, album } = props;
+  const { song } = props;
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
@@ -53,9 +57,8 @@ const SongCard = props => {
           <Typography variant="caption" color="textSecondary">
             Álbum: {song.album}
           </Typography>
-          <div className={classes.controls}></div>
           <div className={classes.controls}>
-            <IconButton>
+            <IconButton className={classes.playButton}>
               <PlayArrowIcon className={classes.playIcon} />
             </IconButton>
           </div>
@@ -68,8 +71,7 @@ const SongCard = props => {
 
 SongCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  song: PropTypes.object.isRequired,
-  album: PropTypes.object.isRequired
+  song: PropTypes.object.isRequired
 };
 
 export default SongCard;

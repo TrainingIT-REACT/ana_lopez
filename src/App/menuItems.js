@@ -5,15 +5,18 @@ import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 const menuItems = [
   {
     text: 'Recomendaciones',
-    Icon: StarsIcon
+    Icon: StarsIcon,
+    route: '/'
   },
   {
     text: 'Buscar música',
-    Icon: SearchIcon
+    Icon: SearchIcon,
+    route: '/search'
   },
   {
     text: 'Toda la música',
-    Icon: LibraryMusicIcon
+    Icon: LibraryMusicIcon,
+    route: '/albums'
   }
 ];
 
