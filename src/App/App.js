@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from './Menu';
 import Recommendations from './Recommendations';
+import AlbumList from './AlbumList';
 import { DRAWER_WIDTH } from './constants';
 
 const styles = theme => ({
@@ -42,6 +43,7 @@ class App extends Component {
             <div className={classes.toolbar} />
             <Switch>
               <Route exact path="/" component={Recommendations} />
+              <Route exact path="/albums" component={AlbumList} />
             </Switch>
           </main>
         </Router>
