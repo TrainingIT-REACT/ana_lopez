@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import { DRAWER_WIDTH } from './constants';
 import menuItems from './menuItems';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
