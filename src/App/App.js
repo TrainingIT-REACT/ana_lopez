@@ -9,6 +9,7 @@ import Menu from './Menu';
 import Recommendations from './Recommendations';
 import AlbumList from './AlbumList';
 import Album from './Album';
+import Player from './Player';
 import { DRAWER_WIDTH } from './constants';
 
 const styles = theme => ({
@@ -46,6 +47,7 @@ class App extends Component {
               <Route exact path="/" component={Recommendations} />
               <Route exact path="/albums" component={AlbumList} />
               <Route exact path="/albums/:id" component={Album} />
+              <Route exact path="/player/song/:id" component={Player} />
             </Switch>
           </main>
         </Router>
