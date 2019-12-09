@@ -12,7 +12,9 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = theme => ({
   albumContainer: {
@@ -30,8 +32,13 @@ const styles = theme => ({
     width: '95%',
     padding: 10,
     marginTop: 10
+  },
+  link: {
+    textDecoration: 'none'
   }
 });
+
+const LinkToSong = React.forwardRef((props, ref) => <RouterLink innerRef={ref} exact {...props} />);
 
 class Album extends Component {
   constructor(props) {
@@ -111,10 +118,17 @@ class Album extends Component {
                       <MusicNoteIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText
-                    primary={song.name}
-                    secondary={this.getHoursFromSeconds(song.seconds)}
-                  />
+                  <Link
+                    to={`/player/song/${song.id}`}
+                    component={LinkToSong}
+                    className={classes.link}
+                    color="inherit"
+                  >
+                    <ListItemText
+                      primary={song.name}
+                      secondary={this.getHoursFromSeconds(song.seconds)}
+                    />
+                  </Link>
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="play">
                       <PlayArrowIcon />

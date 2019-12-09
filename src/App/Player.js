@@ -23,7 +23,8 @@ const styles = theme => ({
     borderRadius: 5,
     display: 'block',
     marginRight: 'auto',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    marginBottom: 10
   },
   title: {
     fontWeight: 600
