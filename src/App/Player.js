@@ -69,18 +69,6 @@ class Player extends Component {
     }
   }
 
-  getHoursFromSeconds = totalSeconds => {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = Math.floor((totalSeconds % 3600) % 60);
-
-    const hoursToDisplay = hours > 0 ? `${hours}h ` : '';
-    const minsToDisplay = minutes > 0 ? `${minutes}min ` : '';
-    const secondsToDisplay = seconds > 0 ? `${seconds}s` : '';
-
-    return hoursToDisplay + minsToDisplay + secondsToDisplay;
-  };
-
   render() {
     const { classes } = this.props;
     const { album, song } = this.state;
@@ -89,9 +77,9 @@ class Player extends Component {
         <Paper className={classes.paper}>
           <div className={classes.infoContainer}>
             <img src={album.cover} className={classes.cover} />
-            <Typography variant="h6">Playing: {song.name}</Typography>
+            <Typography variant="h6">Sonando: {song.name}</Typography>
             <Typography variant="subtitle2" color="textSecondary">
-              De: {album.artist}
+              de {album.artist}
             </Typography>
             <Typography variant="subtitle2" color="textSecondary">
               Álbum: {album.name}
