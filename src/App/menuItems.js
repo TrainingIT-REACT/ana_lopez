@@ -16,7 +16,7 @@ const menuItems = [
   {
     text: 'Toda la música',
     Icon: LibraryMusicIcon,
-    route: '/albums'
+    route: '/album-list'
   }
 ];
 

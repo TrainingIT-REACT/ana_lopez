@@ -28,6 +28,7 @@ const AlbumList = React.lazy(() => import('./AlbumList'));
 const Album = React.lazy(() => import('./Album'));
 const Player = React.lazy(() => import('./Player'));
 const Login = React.lazy(() => import('./Login'));
+const NotFound = React.lazy(() => import('./NotFound'));
 
 class App extends Component {
   reloadPage = () => {
@@ -56,10 +57,11 @@ class App extends Component {
                     >
                       <Switch>
                         <Route exact path="/" component={Recommendations} />
-                        <Route exact path="/albums" component={AlbumList} />
-                        <Route exact path="/albums/:id([0-9]*)" component={Album} />
+                        <Route exact path="/album-list" component={AlbumList} />
+                        <Route exact path="/album-list/:id([0-9]*)" component={Album} />
                         <Route exact path="/player/song/:id([0-9]*)" component={Player} />
                         <Route exact path="/login" component={Login} />
+                        <Route component={NotFound} />
                       </Switch>
                     </ErrorBoundary>
                   </div>

@@ -87,7 +87,7 @@ class Recommendations extends Component {
   };
 
   onClickOnAlbum = albumId => {
-    this.props.history.push(`albums/${albumId}`);
+    this.props.history.push(`album-list/${albumId}`);
   };
 
   render() {
