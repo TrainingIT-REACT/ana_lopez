@@ -42,11 +42,21 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.userNameRef = React.createRef();
+    this.state = {
+      user: '',
+      password: ''
+    };
   }
 
   componentDidMount() {
     this.userNameRef.current.focus();
   }
+
+  onChangeField = event => {
+    const fieldName = event.target.name;
+    const newValue = event.target.value;
+    this.setState({ [fieldName]: newValue });
+  };
 
   render() {
     const { classes } = this.props;
@@ -61,10 +71,21 @@ class Login extends Component {
             <TextField
               label="Usuario"
               variant="outlined"
+              name="user"
               className={classes.inputs}
               inputRef={this.userNameRef}
+              value={this.state.user}
+              onChange={this.onChangeField}
             />
-            <TextField label="Contraseña" variant="outlined" className={classes.inputs} />
+            <TextField
+              type="password"
+              label="Contraseña"
+              variant="outlined"
+              name="password"
+              className={classes.inputs}
+              value={this.state.password}
+              onChange={this.onChangeField}
+            />
           </div>
           <div className={classes.buttonContainer}>
             <Button variant="contained" color="primary">
