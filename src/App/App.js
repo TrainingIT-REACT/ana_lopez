@@ -57,8 +57,8 @@ class App extends Component {
                       <Switch>
                         <Route exact path="/" component={Recommendations} />
                         <Route exact path="/albums" component={AlbumList} />
-                        <Route exact path="/albums/:id" component={Album} />
-                        <Route exact path="/player/song/:id" component={Player} />
+                        <Route exact path="/albums/:id([0-9]*)" component={Album} />
+                        <Route exact path="/player/song/:id([0-9]*)" component={Player} />
                         <Route exact path="/login" component={Login} />
                       </Switch>
                     </ErrorBoundary>
