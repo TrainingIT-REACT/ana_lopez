@@ -38,7 +38,7 @@ const styles = theme => ({
   }
 });
 
-const LinkToSong = React.forwardRef((props, ref) => <RouterLink innerRef={ref} exact {...props} />);
+const LinkToSong = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 
 class Album extends Component {
   constructor(props) {
