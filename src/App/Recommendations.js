@@ -103,7 +103,9 @@ class Recommendations extends Component {
             {this.state.albums.map((recommendation, index) => (
               <div className={classes.cardContainer} key={index}>
                 <AlbumCard
-                  album={recommendation}
+                  name={recommendation.name}
+                  artist={recommendation.artist}
+                  cover={recommendation.cover}
                   onClickOnAlbum={() => this.onClickOnAlbum(recommendation.id)}
                 />
               </div>
@@ -116,7 +118,12 @@ class Recommendations extends Component {
           <div className={classes.recommendationsList}>
             {this.state.songs.map((recommendation, index) => (
               <div className={classes.cardContainer} key={index}>
-                <SongCard song={recommendation} />
+                <SongCard
+                  name={recommendation.name}
+                  artist={recommendation.artist}
+                  album={recommendation.album}
+                  cover={recommendation.cover}
+                />
               </div>
             ))}
           </div>

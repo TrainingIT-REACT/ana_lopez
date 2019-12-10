@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -15,17 +15,17 @@ const useStyles = makeStyles({
 
 const AlbumCard = props => {
   const classes = useStyles();
-  const { album } = props;
+  const { name, artist, cover } = props;
   return (
     <Card>
       <CardActionArea onClick={props.onClickOnAlbum}>
-        <CardMedia className={classes.media} image={album.cover} />
+        <CardMedia className={classes.media} image={cover} />
         <CardContent>
           <Typography gutterBottom variant="h6">
-            {album.name}
+            {name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            de {album.artist}
+            de {artist}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -34,7 +34,9 @@ const AlbumCard = props => {
 };
 
 AlbumCard.propTypes = {
-  album: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  cover: PropTypes.string.isRequired,
+  artist: PropTypes.string.isRequired,
   onClickOnAlbum: PropTypes.func.isRequired
 };
 
@@ -42,4 +44,4 @@ AlbumCard.defaultProps = {
   onClickOnAlbum: () => ({})
 };
 
-export default AlbumCard;
+export default memo(AlbumCard);

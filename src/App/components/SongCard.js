@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -39,19 +39,19 @@ const useStyles = makeStyles(theme => ({
 
 const SongCard = props => {
   const classes = useStyles();
-  const { song } = props;
+  const { name, artist, album, cover } = props;
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography variant="subtitle2" className={classes.songName}>
-            {song.name}
+            {name}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {song.artist}
+            {artist}
           </Typography>
           <Typography variant="caption" color="textSecondary">
-            Álbum: {song.album}
+            Álbum: {album}
           </Typography>
           <div className={classes.controls}>
             <IconButton>
@@ -60,13 +60,16 @@ const SongCard = props => {
           </div>
         </CardContent>
       </div>
-      <CardMedia className={classes.cover} image={song.cover} />
+      <CardMedia className={classes.cover} image={cover} />
     </Card>
   );
 };
 
 SongCard.propTypes = {
-  song: PropTypes.object.isRequired
+  name: PropTypes.string.isRequired,
+  artist: PropTypes.string.isRequired,
+  album: PropTypes.string.isRequired,
+  cover: PropTypes.string.isRequired
 };
 
-export default SongCard;
+export default memo(SongCard);

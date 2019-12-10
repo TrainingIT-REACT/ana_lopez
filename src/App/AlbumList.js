@@ -39,7 +39,12 @@ class AlbumList extends Component {
         <Grid container spacing={2}>
           {albums.map((album, index) => (
             <Grid item xs={12} sm={6} md={4} xl={3} key={index}>
-              <AlbumCard album={album} onClickOnAlbum={() => this.onClickOnAlbum(album.id)} />
+              <AlbumCard
+                name={album.name}
+                artist={album.artist}
+                cover={album.cover}
+                onClickOnAlbum={() => this.onClickOnAlbum(album.id)}
+              />
             </Grid>
           ))}
         </Grid>
