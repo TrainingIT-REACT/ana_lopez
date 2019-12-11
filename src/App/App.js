@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import AppHeader from './AppBar';
 import Menu from './Menu';
 import ErrorBoundary from './ErrorBoundary';
+import store from './store';
 
 const styles = theme => ({
   root: {
@@ -44,30 +46,32 @@ class App extends Component {
             message="Algo ha ido mal al cargar la applicación. Pulsa el botón para refrescar la página:"
             onRetry={this.reloadPage}
           >
-            <Router>
-              <AppHeader />
-              <Menu />
-              <main className={classes.main}>
-                <div className={classes.toolbar} />
-                <React.Suspense fallback={<LinearProgress />}>
-                  <div className={classes.content}>
-                    <ErrorBoundary
-                      message="Ha ocurrido un error en la página a la que estás accediendo. Pulsa el botón para refrescar:"
-                      onRetry={this.reloadPage}
-                    >
-                      <Switch>
-                        <Route exact path="/" component={Recommendations} />
-                        <Route exact path="/album-list" component={AlbumList} />
-                        <Route exact path="/album-list/:id([0-9]*)" component={Album} />
-                        <Route exact path="/player/song/:id([0-9]*)" component={Player} />
-                        <Route exact path="/login" component={Login} />
-                        <Route component={NotFound} />
-                      </Switch>
-                    </ErrorBoundary>
-                  </div>
-                </React.Suspense>
-              </main>
-            </Router>
+            <Provider store={store}>
+              <Router>
+                <AppHeader />
+                <Menu />
+                <main className={classes.main}>
+                  <div className={classes.toolbar} />
+                  <React.Suspense fallback={<LinearProgress />}>
+                    <div className={classes.content}>
+                      <ErrorBoundary
+                        message="Ha ocurrido un error en la página a la que estás accediendo. Pulsa el botón para refrescar:"
+                        onRetry={this.reloadPage}
+                      >
+                        <Switch>
+                          <Route exact path="/" component={Recommendations} />
+                          <Route exact path="/album-list" component={AlbumList} />
+                          <Route exact path="/album-list/:id([0-9]*)" component={Album} />
+                          <Route exact path="/player/song/:id([0-9]*)" component={Player} />
+                          <Route exact path="/login" component={Login} />
+                          <Route component={NotFound} />
+                        </Switch>
+                      </ErrorBoundary>
+                    </div>
+                  </React.Suspense>
+                </main>
+              </Router>
+            </Provider>
           </ErrorBoundary>
         </div>
       </React.Suspense>

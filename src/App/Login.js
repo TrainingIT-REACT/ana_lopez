@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { login } from './actions/login';
 
 const styles = () => ({
   container: {
@@ -58,6 +60,10 @@ class Login extends Component {
     this.setState({ [fieldName]: newValue });
   };
 
+  onClickOnLogin = () => {
+    this.props.login(this.state.user, this.state.password);
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -88,7 +94,7 @@ class Login extends Component {
             />
           </div>
           <div className={classes.buttonContainer}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={this.onClickOnLogin}>
               Iniciar sesión
             </Button>
           </div>
@@ -98,4 +104,8 @@ class Login extends Component {
   }
 }
 
-export default withStyles(styles)(Login);
+const mapDispatchToProps = dispatch => ({
+  login: (user, password) => dispatch(login(user, password))
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Login));
