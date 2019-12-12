@@ -5,3 +5,7 @@ export const login = (name, password) => ({
   name,
   password
 });
+
+export const logout = () => ({
+  type: types.LOGOUT
+});

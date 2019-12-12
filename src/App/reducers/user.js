@@ -10,6 +10,10 @@ const reducer = (state = initialState, action) => {
       return {
         name: action.name
       };
+    case types.LOGOUT:
+      return {
+        name: ''
+      };
     default:
       return state;
   }
