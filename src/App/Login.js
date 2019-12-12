@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -103,6 +104,11 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = dispatch => ({
   login: (user, password) => dispatch(login(user, password))

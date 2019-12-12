@@ -7,6 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import AppHeader from './AppBar';
 import Menu from './Menu';
 import ErrorBoundary from './ErrorBoundary';
+import UserProfile from './UserProfile';
 import store from './store';
 
 const styles = theme => ({
@@ -64,6 +65,7 @@ class App extends Component {
                           <Route exact path="/album-list/:id([0-9]*)" component={Album} />
                           <Route exact path="/player/song/:id([0-9]*)" component={Player} />
                           <Route exact path="/login" component={Login} />
+                          <Route exact path="/profile" component={UserProfile} />
                           <Route component={NotFound} />
                         </Switch>
                       </ErrorBoundary>

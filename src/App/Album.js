@@ -19,18 +19,18 @@ import { Link as RouterLink } from 'react-router-dom';
 const styles = theme => ({
   albumContainer: {
     width: '95%',
-    padding: 10,
+    padding: 15,
     display: 'flex'
   },
   cover: {
-    width: 180,
-    height: 180,
+    width: 160,
+    height: 160,
     borderRadius: 5,
     marginRight: 10
   },
   songsContainer: {
     width: '95%',
-    padding: 10,
+    padding: 15,
     marginTop: 10
   },
   link: {

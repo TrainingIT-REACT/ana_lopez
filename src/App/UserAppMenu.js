@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
@@ -44,6 +45,11 @@ class UserAppMenu extends Component {
     this.props.logout();
   };
 
+  onClickOnUserProfile = () => {
+    this.handleClose();
+    this.props.history.push('/profile');
+  };
+
   render() {
     const { user, classes } = this.props;
     return (
@@ -72,6 +78,7 @@ class UserAppMenu extends Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList autoFocusItem={this.state.menuOpen} className={classes.menu}>
+                    <MenuItem onClick={this.onClickOnUserProfile}>Your Profile</MenuItem>
                     <MenuItem onClick={this.onClickOnLogout}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -87,11 +94,14 @@ class UserAppMenu extends Component {
 UserAppMenu.propTypes = {
   user: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout())
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(UserAppMenu));
+const styledUserAppMenu = withStyles(styles)(UserAppMenu);
+const connectedUserAppMenu = connect(null, mapDispatchToProps)(styledUserAppMenu);
+export default withRouter(connectedUserAppMenu);
