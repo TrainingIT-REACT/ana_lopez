@@ -63,6 +63,7 @@ class Login extends Component {
 
   onClickOnLogin = () => {
     this.props.login(this.state.user, this.state.password);
+    this.props.history.push('/');
   };
 
   render() {
@@ -109,7 +110,8 @@ class Login extends Component {
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({

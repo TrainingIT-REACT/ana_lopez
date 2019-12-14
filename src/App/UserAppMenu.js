@@ -43,6 +43,7 @@ class UserAppMenu extends Component {
   onClickOnLogout = () => {
     this.handleClose();
     this.props.logout();
+    this.props.history.push('/');
   };
 
   onClickOnUserProfile = () => {
