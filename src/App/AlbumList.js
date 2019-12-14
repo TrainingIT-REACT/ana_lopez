@@ -1,30 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import AlbumCard from './components/AlbumCard';
+import { getAlbums } from './actions/albums';
 
 class AlbumList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: true,
-      albums: []
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      const resAlbums = await fetch('/albums');
-      const albums = await resAlbums.json();
-      this.setState(prevState => ({
-        ...prevState,
-        loading: false,
-        albums
-      }));
-    } catch (err) {
-      console.error('Error accediendo al servidor', err);
-    }
+  componentDidMount() {
+    this.props.getAlbums();
   }
 
   onClickOnAlbum = albumId => {
@@ -33,7 +16,9 @@ class AlbumList extends Component {
   };
 
   render() {
-    const { albums } = this.state;
+    const { albums } = this.props;
+    if (this.props.loading) return <p>Cargando álbumes...</p>;
+    if (this.props.error) return <p>Ha ocurrido un error al cargar la lista de álbumes</p>;
     return (
       <>
         <Grid container spacing={2}>
@@ -55,7 +40,19 @@ class AlbumList extends Component {
 
 AlbumList.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  albums: PropTypes.array.isRequired,
+  error: PropTypes.bool.isRequired,
+  getAlbums: PropTypes.func.isRequired
 };
 
-export default AlbumList;
+const mapStateToProps = state => ({
+  ...state.albums
+});
+
+const mapDispatchToProps = dispatch => ({
+  getAlbums: () => dispatch(getAlbums())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumList);
