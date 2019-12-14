@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
@@ -15,8 +16,9 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import { getAlbumDetails } from './actions/albumDetails';
 
-const styles = theme => ({
+const styles = () => ({
   albumContainer: {
     width: '95%',
     padding: 15,
@@ -41,32 +43,9 @@ const styles = theme => ({
 const LinkToSong = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 
 class Album extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: true,
-      album: {},
-      songs: []
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      const albumId = this.props.match.params.id;
-      const resAlbum = await fetch(`/albums/${albumId}`);
-      const album = await resAlbum.json();
-      const resSongs = await fetch(`/songs?album_id=${albumId}`);
-      const albumSongs = await resSongs.json();
-      this.setState(prevState => ({
-        ...prevState,
-        loading: false,
-        album,
-        songs: albumSongs
-      }));
-    } catch (err) {
-      console.error('Error accediendo al servidor', err);
-    }
+  componentDidMount() {
+    const albumId = this.props.match.params.id;
+    this.props.getAlbumDetails(albumId);
   }
 
   getHoursFromSeconds = totalSeconds => {
@@ -87,10 +66,11 @@ class Album extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { album, songs } = this.state;
+    const { classes, album, songs } = this.props;
     const albumDuration = this.getAlbumDuration(songs);
     const numberOfSongs = songs.length;
+    if (this.props.loading) return <p>Cargando album info...</p>;
+    if (this.props.error) return <p>Ha ocurrido un error al cargar la información del album</p>;
     return (
       <>
         <Paper className={classes.albumContainer}>
@@ -147,7 +127,20 @@ class Album extends Component {
 
 Album.propTypes = {
   match: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  album: PropTypes.object,
+  songs: PropTypes.array,
+  error: PropTypes.bool.isRequired,
+  getAlbumDetails: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Album);
+const mapStateToProps = state => ({
+  ...state.albumDetails
+});
+
+const mapDispatchToProps = dispatch => ({
+  getAlbumDetails: id => dispatch(getAlbumDetails(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Album));
