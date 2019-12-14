@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import AlbumCard from './components/AlbumCard';
 import SongCard from './components/SongCard';
+import { getRecommendations } from './actions/recommendations';
 
 const styles = () => ({
   media: {
@@ -25,66 +27,9 @@ const styles = () => ({
 });
 
 class Recommendations extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: true,
-      albums: []
-    };
+  componentDidMount() {
+    this.props.getRecommendations();
   }
-
-  async componentDidMount() {
-    try {
-      const resAlbums = await fetch('/albums');
-      const albums = await resAlbums.json();
-      const albumRecommendations = this.getRandomRecommendations(albums, 4);
-      const resSongs = await fetch('/songs');
-      const songs = await resSongs.json();
-      const songsRecommendations = this.getRandomRecommendations(songs, 3);
-      const getSongsRecommendationsInfo = this.getSongsRecommendationsInfo(
-        songsRecommendations,
-        albums
-      );
-      this.setState(prevState => ({
-        ...prevState,
-        loading: false,
-        albums: albumRecommendations,
-        songs: getSongsRecommendationsInfo
-      }));
-    } catch (err) {
-      console.error('Error accediendo al servidor', err);
-    }
-  }
-
-  getSongsRecommendationsInfo = (songsRecommendations, albums) => {
-    return songsRecommendations.map(song => {
-      const album = albums.find(a => a.id === song.album_id);
-      return {
-        name: song.name,
-        album: album.name,
-        cover: album.cover,
-        artist: album.artist
-      };
-    });
-  };
-
-  getRandomRecommendations = (musicList, numOfRecommendations) => {
-    const numberOfItems = musicList.length;
-    if (numberOfItems !== 0) {
-      let recommendations = [];
-      while (recommendations.length < numOfRecommendations) {
-        const recommendationIndex = Math.floor(Math.random() * numberOfItems);
-        const musicItem = musicList[recommendationIndex];
-        if (!recommendations.find(recommendation => recommendation.id === musicItem.id)) {
-          recommendations.push(musicItem);
-        }
-      }
-      return recommendations;
-    }
-
-    return [];
-  };
 
   onClickOnAlbum = albumId => {
     this.props.history.push(`album-list/${albumId}`);
@@ -92,7 +37,8 @@ class Recommendations extends Component {
 
   render() {
     const { classes } = this.props;
-    if (this.state.loading) return null;
+    if (this.props.loading) return <p>Cargando recomendaciones...</p>;
+    if (this.props.error) return <p>Ha ocurrido un error al cargar tus recomendaciones</p>;
     return (
       <>
         <Typography variant="subtitle2">Hoy te recomendamos...</Typography>
@@ -100,7 +46,7 @@ class Recommendations extends Component {
           <Typography variant="h6">Álbumes</Typography>
           <Divider />
           <div className={classes.recommendationsList}>
-            {this.state.albums.map((recommendation, index) => (
+            {this.props.albums.map((recommendation, index) => (
               <div className={classes.cardContainer} key={index}>
                 <AlbumCard
                   name={recommendation.name}
@@ -116,7 +62,7 @@ class Recommendations extends Component {
           <Typography variant="h6">Canciones</Typography>
           <Divider />
           <div className={classes.recommendationsList}>
-            {this.state.songs.map((recommendation, index) => (
+            {this.props.songs.map((recommendation, index) => (
               <div className={classes.cardContainer} key={index}>
                 <SongCard
                   name={recommendation.name}
@@ -134,7 +80,20 @@ class Recommendations extends Component {
 }
 
 Recommendations.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  albums: PropTypes.array.isRequired,
+  songs: PropTypes.array.isRequired,
+  error: PropTypes.bool.isRequired,
+  getRecommendations: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Recommendations);
+const mapStateToProps = state => ({
+  ...state.recommendations
+});
+
+const mapDispatchToProps = dispatch => ({
+  getRecommendations: () => dispatch(getRecommendations())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Recommendations));
