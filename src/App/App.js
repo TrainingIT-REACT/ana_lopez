@@ -7,7 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import AppHeader from './AppBar';
 import Menu from './Menu';
 import ErrorBoundary from './ErrorBoundary';
-import UserProfile from './UserProfile';
+import PrivateRoute from './PrivateRoute';
 import store from './store';
 
 const styles = theme => ({
@@ -31,6 +31,7 @@ const AlbumList = React.lazy(() => import('./AlbumList'));
 const Album = React.lazy(() => import('./Album'));
 const Player = React.lazy(() => import('./Player'));
 const Login = React.lazy(() => import('./Login'));
+const UserProfile = React.lazy(() => import('./UserProfile'));
 const NotFound = React.lazy(() => import('./NotFound'));
 
 class App extends Component {
@@ -65,7 +66,7 @@ class App extends Component {
                           <Route exact path="/album-list/:id([0-9]*)" component={Album} />
                           <Route exact path="/player/song/:id([0-9]*)" component={Player} />
                           <Route exact path="/login" component={Login} />
-                          <Route exact path="/profile" component={UserProfile} />
+                          <PrivateRoute exact path="/profile" component={UserProfile} />
                           <Route component={NotFound} />
                         </Switch>
                       </ErrorBoundary>

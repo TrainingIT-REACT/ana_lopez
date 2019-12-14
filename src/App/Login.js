@@ -66,7 +66,7 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
     return (
       <div className={classes.container}>
         <Paper className={classes.paper}>
@@ -99,6 +99,7 @@ class Login extends Component {
               Iniciar sesión
             </Button>
           </div>
+          {location.state && location.state.message && <p>{location.state.message}</p>}
         </Paper>
       </div>
     );
@@ -107,7 +108,8 @@ class Login extends Component {
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
