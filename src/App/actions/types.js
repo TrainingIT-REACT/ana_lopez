@@ -9,7 +9,10 @@ const actions = [
   'ALBUMS_LOADED',
   'ALBUM_DETAILS_LOADING',
   'ALBUM_DETAILS_ERROR',
-  'ALBUM_DETAILS_LOADED'
+  'ALBUM_DETAILS_LOADED',
+  'SONG_LOADING',
+  'SONG_ERROR',
+  'SONG_LOADED'
 ];
 
 const actionTypes = {};

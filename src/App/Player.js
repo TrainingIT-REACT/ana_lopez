@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/core/styles';
+import { getSong } from './actions/song';
 
-const styles = theme => ({
+const styles = () => ({
   container: {
     width: '100%',
     display: 'flex',
@@ -41,63 +41,48 @@ const styles = theme => ({
 });
 
 class Player extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      loading: true,
-      album: {},
-      song: {}
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      const songId = this.props.match.params.id;
-      const resSong = await fetch(`/songs/${songId}`);
-      const song = await resSong.json();
-      const albumId = song.album_id;
-      const resAlbum = await fetch(`/albums/${albumId}`);
-      const album = await resAlbum.json();
-      this.setState(prevState => ({
-        ...prevState,
-        loading: false,
-        song,
-        album
-      }));
-    } catch (err) {
-      console.error('Error accediendo al servidor', err);
-    }
+  componentDidMount() {
+    const songId = this.props.match.params.id;
+    this.props.getSong(songId);
   }
 
   render() {
     const { classes } = this.props;
-    const { album, song } = this.state;
+    if (this.props.loading) return <p>Cargando canción...</p>;
+    if (this.props.error) return <p>Ha ocurrido un error al cargar la canción</p>;
     return (
       <div className={classes.container}>
         <Paper className={classes.paper}>
           <div className={classes.infoContainer}>
-            <img src={album.cover} className={classes.cover} />
-            <Typography variant="h6">Sonando: {song.name}</Typography>
+            <img src={this.props.albumCover} className={classes.cover} />
+            <Typography variant="h6">Sonando: {this.props.songName}</Typography>
             <Typography variant="subtitle2" color="textSecondary">
-              de {album.artist}
+              de {this.props.artist}
             </Typography>
             <Typography variant="subtitle2" color="textSecondary">
-              Álbum: {album.name}
+              Álbum: {this.props.albumName}
             </Typography>
           </div>
-          <div className={classes.controls}>
-            <IconButton aria-label="play">
-              <PlayArrowIcon className={classes.playIcon} />
-            </IconButton>
-            <div className={classes.linearProgress}>
-              <LinearProgress variant="determinate" value={0} />
-            </div>
-          </div>
+          <audio controls>
+            <source src={this.props.audio} type="audio/mpeg" />
+            Tu navegador no soporta audio
+          </audio>
         </Paper>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Player);
+Player.propTypes = {
+  getSong: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  ...state.song
+});
+
+const mapDispatchToProps = dispatch => ({
+  getSong: id => dispatch(getSong(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Player));
