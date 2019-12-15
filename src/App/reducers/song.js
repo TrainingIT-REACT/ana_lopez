@@ -8,7 +8,9 @@ const initialState = {
   albumCover: '',
   artist: '',
   albumName: '',
-  error: false
+  error: false,
+  floatingPlayerOpen: false,
+  playing: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +38,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: true
+      };
+    case types.OPEN_FLOATING_PLAYER:
+      return {
+        ...state,
+        floatingPlayerOpen: true
+      };
+    case types.CLOSE_FLOATING_PLAYER:
+      return {
+        ...state,
+        floatingPlayerOpen: false
+      };
+    case types.START_PLAYING:
+      return {
+        ...state,
+        playing: true
+      };
+    case types.STOP_PLAYING:
+      return {
+        ...state,
+        playing: false
       };
     default:
       return state;

@@ -8,6 +8,7 @@ import AppHeader from './AppBar';
 import Menu from './Menu';
 import ErrorBoundary from './ErrorBoundary';
 import PrivateRoute from './PrivateRoute';
+import FloatingPlayer from './FloatingPlayer';
 import store from './store';
 
 const styles = theme => ({
@@ -29,7 +30,7 @@ const styles = theme => ({
 const Recommendations = React.lazy(() => import('./Recommendations'));
 const AlbumList = React.lazy(() => import('./AlbumList'));
 const Album = React.lazy(() => import('./Album'));
-const Player = React.lazy(() => import('./Player'));
+const Player = React.lazy(() => import('./PlayerView'));
 const Login = React.lazy(() => import('./Login'));
 const UserProfile = React.lazy(() => import('./UserProfile'));
 const NotFound = React.lazy(() => import('./NotFound'));
@@ -74,6 +75,7 @@ class App extends Component {
                   </React.Suspense>
                 </main>
               </Router>
+              <FloatingPlayer />
             </Provider>
           </ErrorBoundary>
         </div>

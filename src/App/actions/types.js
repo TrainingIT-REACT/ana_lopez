@@ -12,7 +12,11 @@ const actions = [
   'ALBUM_DETAILS_LOADED',
   'SONG_LOADING',
   'SONG_ERROR',
-  'SONG_LOADED'
+  'SONG_LOADED',
+  'OPEN_FLOATING_PLAYER',
+  'CLOSE_FLOATING_PLAYER',
+  'START_PLAYING',
+  'STOP_PLAYING'
 ];
 
 const actionTypes = {};

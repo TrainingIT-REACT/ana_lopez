@@ -27,3 +27,19 @@ export const getSong = id => async dispatch => {
     dispatch(songError());
   }
 };
+
+export const openFloatingPlayer = () => ({
+  type: types.OPEN_FLOATING_PLAYER
+});
+
+export const closeFloatingPlayer = () => ({
+  type: types.CLOSE_FLOATING_PLAYER
+});
+
+export const startPlaying = () => ({
+  type: types.START_PLAYING
+});
+
+export const stopPlaying = () => ({
+  type: types.STOP_PLAYING
+});
