@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import SearchIcon from '@material-ui/icons/Search';
 import { withStyles } from '@material-ui/core/styles';
-import { search, clearSearch } from './actions/search';
+import { search, clearSearch } from '../actions/search';
 
 const styles = () => ({
   paper: {

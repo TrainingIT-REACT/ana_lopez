@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import AlbumCard from './components/AlbumCard';
-import { getAlbums } from './actions/albums';
+import { getAlbums } from '../actions/albums';
 
 class AlbumList extends Component {
   componentDidMount() {

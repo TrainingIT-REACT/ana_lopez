@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { login } from './actions/login';
+import { login } from '../actions/login';
 
 const styles = () => ({
   container: {

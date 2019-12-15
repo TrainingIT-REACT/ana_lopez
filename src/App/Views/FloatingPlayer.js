@@ -7,8 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { startPlaying, stopPlaying, closeFloatingPlayer } from './actions/song';
-import Player from './Player';
+import { startPlaying, stopPlaying, closeFloatingPlayer } from '../actions/song';
+import Player from './components/Player';
 
 const playerNode = document.getElementById('floating-player');
 

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { getSong, openFloatingPlayer, startPlaying, stopPlaying, clearSong } from './actions/song';
-import { addSongToHistory } from './actions/history';
-import Player from './Player';
+import { getSong, openFloatingPlayer, startPlaying, stopPlaying, clearSong } from '../actions/song';
+import { addSongToHistory } from '../actions/history';
+import Player from './components/Player';
 
 const styles = () => ({
   container: {
@@ -76,7 +76,7 @@ class PlayerView extends Component {
       <div className={classes.container}>
         <Paper className={classes.paper}>
           <div className={classes.infoContainer}>
-            <img src={this.props.albumCover} className={classes.cover} />
+            <img alt="cover" src={this.props.albumCover} className={classes.cover} />
             <Typography variant="h6">Sonando: {this.props.songName}</Typography>
             <Typography variant="subtitle2" color="textSecondary">
               de {this.props.artist}

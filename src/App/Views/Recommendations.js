@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import AlbumCard from './components/AlbumCard';
 import SongCard from './components/SongCard';
-import { getRecommendations } from './actions/recommendations';
+import { getRecommendations } from '../actions/recommendations';
 
 const styles = () => ({
   media: {

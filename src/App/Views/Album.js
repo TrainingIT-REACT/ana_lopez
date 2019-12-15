@@ -16,9 +16,9 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
-import { getAlbumDetails } from './actions/albumDetails';
-import { getSong, openFloatingPlayer } from './actions/song';
-import { addAlbumToHistory, addSongToHistory } from './actions/history';
+import { getAlbumDetails } from '../actions/albumDetails';
+import { getSong, openFloatingPlayer } from '../actions/song';
+import { addAlbumToHistory, addSongToHistory } from '../actions/history';
 
 const styles = () => ({
   albumContainer: {
@@ -98,7 +98,7 @@ class Album extends Component {
     return (
       <>
         <Paper className={classes.albumContainer}>
-          <img src={album.cover} className={classes.cover}></img>
+          <img alt="cover" src={album.cover} className={classes.cover}></img>
           <div>
             <Typography variant="h6">{album.name}</Typography>
             <Typography variant="body2" component="p">

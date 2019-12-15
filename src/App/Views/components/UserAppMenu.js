@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { withStyles } from '@material-ui/core/styles';
-import { logout } from './actions/login';
+import { logout } from '../../actions/login';
 
 const styles = theme => ({
   menu: {

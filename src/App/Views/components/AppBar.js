@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import { makeStyles } from '@material-ui/core/styles';
 import UserAppMenu from './UserAppMenu';
-import { DRAWER_WIDTH } from './constants';
+import { DRAWER_WIDTH } from '../constants';
 
 const useStyles = makeStyles(theme => ({
   appBar: {

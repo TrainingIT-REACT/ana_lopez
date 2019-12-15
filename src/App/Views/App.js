@@ -5,13 +5,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import AppHeader from './AppBar';
-import Menu from './Menu';
+import AppHeader from './components/AppBar';
+import Menu from './components/Menu';
 import Recommendations from './Recommendations';
-import ErrorBoundary from './ErrorBoundary';
-import PrivateRoute from './PrivateRoute';
+import ErrorBoundary from './utils/ErrorBoundary';
+import PrivateRoute from './utils/PrivateRoute';
 import FloatingPlayer from './FloatingPlayer';
-import store from './store';
+import store from '../store';
 
 const styles = theme => ({
   root: {
@@ -35,7 +35,7 @@ const Player = React.lazy(() => import('./PlayerView'));
 const Login = React.lazy(() => import('./Login'));
 const UserProfile = React.lazy(() => import('./UserProfile'));
 const Search = React.lazy(() => import('./Search'));
-const NotFound = React.lazy(() => import('./NotFound'));
+const NotFound = React.lazy(() => import('./utils/NotFound'));
 
 class App extends Component {
   reloadPage = () => {
