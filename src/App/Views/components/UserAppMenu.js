@@ -21,7 +21,7 @@ const styles = theme => ({
   }
 });
 
-class UserAppMenu extends Component {
+export class UserAppMenu extends Component {
   constructor(props) {
     super(props);
     this.anchorRef = React.createRef();
@@ -78,7 +78,7 @@ class UserAppMenu extends Component {
             >
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList autoFocusItem={this.state.menuOpen} className={classes.menu}>
+                  <MenuList className={classes.menu}>
                     <MenuItem onClick={this.onClickOnUserProfile}>Your Profile</MenuItem>
                     <MenuItem onClick={this.onClickOnLogout}>Logout</MenuItem>
                   </MenuList>

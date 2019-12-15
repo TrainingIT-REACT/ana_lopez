@@ -41,7 +41,7 @@ const styles = () => ({
   }
 });
 
-class Login extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
     this.userNameRef = React.createRef();
