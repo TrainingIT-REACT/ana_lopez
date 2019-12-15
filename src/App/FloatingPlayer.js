@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { startPlaying, stopPlaying } from './actions/song';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { startPlaying, stopPlaying, closeFloatingPlayer } from './actions/song';
 import Player from './Player';
 
 const playerNode = document.getElementById('floating-player');
@@ -24,6 +26,15 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
     marginBottom: 5
+  },
+  flex: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  closeIcon: {
+    color: theme.palette.common.white,
+    padding: 10
   }
 });
 
@@ -55,8 +66,19 @@ class FloatingPlayer extends React.Component {
     return ReactDOM.createPortal(
       <Paper className={classes.container}>
         <div>
-          <Typography variant="body2">Sonando: {this.props.songName}</Typography>
-          <Typography variant="caption">De {this.props.artist}</Typography>
+          <div className={classes.flex}>
+            <div>
+              <Typography variant="caption">De {this.props.artist}</Typography>
+              <Typography variant="body2">Sonando: {this.props.songName}</Typography>
+            </div>
+            <IconButton
+              aria-label="close"
+              className={classes.closeIcon}
+              onClick={this.props.closeFloatingPlayer}
+            >
+              <CloseIcon fontSize="small" className={classes.icon} />
+            </IconButton>
+          </div>
         </div>
         <div>
           <Player
@@ -86,7 +108,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   startPlaying: () => dispatch(startPlaying()),
-  stopPlaying: () => dispatch(stopPlaying())
+  stopPlaying: () => dispatch(stopPlaying()),
+  closeFloatingPlayer: () => dispatch(closeFloatingPlayer())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(FloatingPlayer));

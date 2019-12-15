@@ -47,7 +47,8 @@ const reducer = (state = initialState, action) => {
     case types.CLOSE_FLOATING_PLAYER:
       return {
         ...state,
-        floatingPlayerOpen: false
+        floatingPlayerOpen: false,
+        playing: false
       };
     case types.START_PLAYING:
       return {
