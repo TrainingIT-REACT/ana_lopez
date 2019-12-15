@@ -43,3 +43,7 @@ export const startPlaying = () => ({
 export const stopPlaying = () => ({
   type: types.STOP_PLAYING
 });
+
+export const clearSong = () => ({
+  type: types.CLEAR_SONG
+});

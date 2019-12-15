@@ -16,7 +16,8 @@ const actions = [
   'OPEN_FLOATING_PLAYER',
   'CLOSE_FLOATING_PLAYER',
   'START_PLAYING',
-  'STOP_PLAYING'
+  'STOP_PLAYING',
+  'CLEAR_SONG'
 ];
 
 const actionTypes = {};

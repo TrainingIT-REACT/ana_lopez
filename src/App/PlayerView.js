@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { getSong, openFloatingPlayer, startPlaying, stopPlaying } from './actions/song';
+import { getSong, openFloatingPlayer, startPlaying, stopPlaying, clearSong } from './actions/song';
 import Player from './Player';
 
 const styles = () => ({
@@ -50,6 +50,8 @@ class PlayerView extends Component {
   componentWillUnmount = () => {
     if (this.props.playing) {
       this.props.openFloatingPlayer();
+    } else {
+      this.props.clearSong();
     }
   };
 
@@ -95,7 +97,8 @@ PlayerView.propTypes = {
   floatingPlayerOpen: PropTypes.bool.isRequired,
   playing: PropTypes.bool.isRequired,
   startPlaying: PropTypes.func.isRequired,
-  stopPlaying: PropTypes.func.isRequired
+  stopPlaying: PropTypes.func.isRequired,
+  clearSong: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -106,7 +109,8 @@ const mapDispatchToProps = dispatch => ({
   getSong: id => dispatch(getSong(id)),
   openFloatingPlayer: () => dispatch(openFloatingPlayer()),
   startPlaying: () => dispatch(startPlaying()),
-  stopPlaying: () => dispatch(stopPlaying())
+  stopPlaying: () => dispatch(stopPlaying()),
+  clearSong: () => dispatch(clearSong())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PlayerView));

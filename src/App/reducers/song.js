@@ -60,6 +60,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         playing: false
       };
+    case types.CLEAR_SONG:
+      return {
+        ...initialState
+      };
     default:
       return state;
   }
