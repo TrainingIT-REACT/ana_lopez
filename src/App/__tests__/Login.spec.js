@@ -4,13 +4,6 @@ import { Login } from '../Views/Login';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-// Login.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   login: PropTypes.func.isRequired,
-//   location: PropTypes.object.isRequired,
-//   history: PropTypes.object.isRequired
-// };
-
 describe('Login', () => {
   let wrapper;
   let loginStub;
