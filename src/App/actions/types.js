@@ -19,7 +19,11 @@ const actions = [
   'STOP_PLAYING',
   'CLEAR_SONG',
   'ADD_ALBUM_TO_HISTORY',
-  'ADD_SONG_TO_HISTORY'
+  'ADD_SONG_TO_HISTORY',
+  'SEARCH_LOADING',
+  'SEARCH_ERROR',
+  'SEARCH_LOADED',
+  'CLEAR_SEARCH'
 ];
 
 const actionTypes = {};

@@ -33,6 +33,7 @@ const Album = React.lazy(() => import('./Album'));
 const Player = React.lazy(() => import('./PlayerView'));
 const Login = React.lazy(() => import('./Login'));
 const UserProfile = React.lazy(() => import('./UserProfile'));
+const Search = React.lazy(() => import('./Search'));
 const NotFound = React.lazy(() => import('./NotFound'));
 
 class App extends Component {
@@ -66,6 +67,7 @@ class App extends Component {
                           <Route exact path="/album-list" component={AlbumList} />
                           <Route exact path="/album-list/:id([0-9]*)" component={Album} />
                           <Route exact path="/player/song/:id([0-9]*)" component={Player} />
+                          <Route exact path="/search" component={Search} />
                           <Route exact path="/login" component={Login} />
                           <PrivateRoute exact path="/profile" component={UserProfile} />
                           <Route component={NotFound} />
