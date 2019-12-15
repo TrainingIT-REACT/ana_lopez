@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '@babel/polyfill';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import AppHeader from './AppBar';
 import Menu from './Menu';
+import Recommendations from './Recommendations';
 import ErrorBoundary from './ErrorBoundary';
 import PrivateRoute from './PrivateRoute';
 import FloatingPlayer from './FloatingPlayer';
@@ -27,7 +29,6 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar
 });
 
-const Recommendations = React.lazy(() => import('./Recommendations'));
 const AlbumList = React.lazy(() => import('./AlbumList'));
 const Album = React.lazy(() => import('./Album'));
 const Player = React.lazy(() => import('./PlayerView'));
