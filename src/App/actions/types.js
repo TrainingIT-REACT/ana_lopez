@@ -17,7 +17,9 @@ const actions = [
   'CLOSE_FLOATING_PLAYER',
   'START_PLAYING',
   'STOP_PLAYING',
-  'CLEAR_SONG'
+  'CLEAR_SONG',
+  'ADD_ALBUM_TO_HISTORY',
+  'ADD_SONG_TO_HISTORY'
 ];
 
 const actionTypes = {};

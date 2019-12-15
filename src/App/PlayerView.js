@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { getSong, openFloatingPlayer, startPlaying, stopPlaying, clearSong } from './actions/song';
+import { addSongToHistory } from './actions/history';
 import Player from './Player';
 
 const styles = () => ({
@@ -55,6 +56,18 @@ class PlayerView extends Component {
     }
   };
 
+  onStartPlaying = () => {
+    this.props.startPlaying();
+    if (this.props.user) {
+      const infoToHistory = {
+        id: this.props.match.params.id,
+        name: this.props.songName,
+        artist: this.props.artist
+      };
+      this.props.addSongToHistory(infoToHistory);
+    }
+  };
+
   render() {
     const { classes } = this.props;
     if (this.props.loading) return <p>Cargando canción...</p>;
@@ -73,7 +86,7 @@ class PlayerView extends Component {
             </Typography>
           </div>
           <Player
-            startPlaying={this.props.startPlaying}
+            startPlaying={this.onStartPlaying}
             stopPlaying={this.props.stopPlaying}
             audio={this.props.audio}
           />
@@ -98,11 +111,13 @@ PlayerView.propTypes = {
   playing: PropTypes.bool.isRequired,
   startPlaying: PropTypes.func.isRequired,
   stopPlaying: PropTypes.func.isRequired,
-  clearSong: PropTypes.func.isRequired
+  clearSong: PropTypes.func.isRequired,
+  user: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  ...state.song
+  ...state.song,
+  user: state.user.name
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -110,7 +125,8 @@ const mapDispatchToProps = dispatch => ({
   openFloatingPlayer: () => dispatch(openFloatingPlayer()),
   startPlaying: () => dispatch(startPlaying()),
   stopPlaying: () => dispatch(stopPlaying()),
-  clearSong: () => dispatch(clearSong())
+  clearSong: () => dispatch(clearSong()),
+  addSongToHistory: song => dispatch(addSongToHistory(song))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PlayerView));

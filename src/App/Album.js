@@ -18,6 +18,7 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import { getAlbumDetails } from './actions/albumDetails';
 import { getSong, openFloatingPlayer } from './actions/song';
+import { addAlbumToHistory, addSongToHistory } from './actions/history';
 
 const styles = () => ({
   albumContainer: {
@@ -52,6 +53,18 @@ class Album extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.loadingSong && !this.props.loadingSong) {
       this.props.openFloatingPlayer();
+      if (this.props.user) {
+        const infoToHistory = {
+          id: this.props.songId,
+          name: this.props.songName,
+          artist: this.props.album.artist
+        };
+        this.props.addSongToHistory(infoToHistory);
+      }
+    }
+
+    if (prevProps.loading && !this.props.loading && this.props.user) {
+      this.props.addAlbumToHistory(this.props.album);
     }
   }
 
@@ -148,18 +161,25 @@ Album.propTypes = {
   songs: PropTypes.array,
   error: PropTypes.bool.isRequired,
   getAlbumDetails: PropTypes.func.isRequired,
-  loadingSong: PropTypes.bool
+  loadingSong: PropTypes.bool,
+  songId: PropTypes.number,
+  user: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   ...state.albumDetails,
-  loadingSong: state.song.loading
+  loadingSong: state.song.loading,
+  songName: state.song.songName,
+  songId: state.song.id,
+  user: state.user.name
 });
 
 const mapDispatchToProps = dispatch => ({
   getAlbumDetails: id => dispatch(getAlbumDetails(id)),
   getSong: id => dispatch(getSong(id)),
-  openFloatingPlayer: () => dispatch(openFloatingPlayer())
+  openFloatingPlayer: () => dispatch(openFloatingPlayer()),
+  addAlbumToHistory: album => dispatch(addAlbumToHistory(album)),
+  addSongToHistory: song => dispatch(addSongToHistory(song))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Album));

@@ -5,8 +5,9 @@ import recommendations from './reducers/recommendations';
 import albums from './reducers/albums';
 import albumDetails from './reducers/albumDetails';
 import song from './reducers/song';
+import history from './reducers/history';
 
 export default createStore(
-  combineReducers({ user, recommendations, albums, albumDetails, song }),
+  combineReducers({ user, recommendations, albums, albumDetails, song, history }),
   applyMiddleware(thunk)
 );

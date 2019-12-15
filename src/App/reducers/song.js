@@ -1,6 +1,7 @@
 import types from '../actions/types';
 
 const initialState = {
+  id: null,
   loading: false,
   songName: '',
   audio: '',
@@ -25,6 +26,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        id: action.song.id,
         songName: action.song.name,
         audio: action.song.audio,
         seconds: action.song.seconds,

@@ -23,7 +23,9 @@ const Player = props => {
     <audio
       controls
       onPlay={onPlaySong}
+      onPlaying={onPlaySong}
       onEnded={onStopSong}
+      onPause={onStopSong}
       autoPlay={props.autoPlay}
       className={classes.player}
     >
