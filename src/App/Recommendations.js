@@ -35,6 +35,10 @@ class Recommendations extends Component {
     this.props.history.push(`album-list/${albumId}`);
   };
 
+  onClickOnSong = songId => {
+    this.props.history.push(`player/song/${songId}`);
+  };
+
   render() {
     const { classes } = this.props;
     if (this.props.loading) return <p>Cargando recomendaciones...</p>;
@@ -69,6 +73,7 @@ class Recommendations extends Component {
                   artist={recommendation.artist}
                   album={recommendation.album}
                   cover={recommendation.cover}
+                  onClickOnSong={() => this.onClickOnSong(recommendation.id)}
                 />
               </div>
             ))}

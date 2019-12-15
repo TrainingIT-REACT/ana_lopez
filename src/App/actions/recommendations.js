@@ -27,6 +27,7 @@ export const getRecommendations = () => async dispatch => {
     const songsInfo = songsRecommendations.map(song => {
       const album = albums.find(a => a.id === song.album_id);
       return {
+        id: song.id,
         name: song.name,
         album: album.name,
         cover: album.cover,
