@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import { getAlbumDetails } from './actions/albumDetails';
+import { getSong, openFloatingPlayer } from './actions/song';
 
 const styles = () => ({
   albumContainer: {
@@ -48,6 +49,12 @@ class Album extends Component {
     this.props.getAlbumDetails(albumId);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.loadingSong && !this.props.loadingSong) {
+      this.props.openFloatingPlayer();
+    }
+  }
+
   getHoursFromSeconds = totalSeconds => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -63,6 +70,10 @@ class Album extends Component {
   getAlbumDuration = songs => {
     const totalSeconds = songs.reduce((total, currentSong) => total + currentSong.seconds, 0);
     return this.getHoursFromSeconds(totalSeconds);
+  };
+
+  onClickOnPlaySong = id => {
+    this.props.getSong(id);
   };
 
   render() {
@@ -110,7 +121,11 @@ class Album extends Component {
                     />
                   </Link>
                   <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="play">
+                    <IconButton
+                      edge="end"
+                      aria-label="play"
+                      onClick={() => this.onClickOnPlaySong(song.id)}
+                    >
                       <PlayArrowIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -132,15 +147,19 @@ Album.propTypes = {
   album: PropTypes.object,
   songs: PropTypes.array,
   error: PropTypes.bool.isRequired,
-  getAlbumDetails: PropTypes.func.isRequired
+  getAlbumDetails: PropTypes.func.isRequired,
+  loadingSong: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-  ...state.albumDetails
+  ...state.albumDetails,
+  loadingSong: state.song.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAlbumDetails: id => dispatch(getAlbumDetails(id))
+  getAlbumDetails: id => dispatch(getAlbumDetails(id)),
+  getSong: id => dispatch(getSong(id)),
+  openFloatingPlayer: () => dispatch(openFloatingPlayer())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Album));
